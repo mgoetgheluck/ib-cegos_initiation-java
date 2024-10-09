@@ -13,6 +13,9 @@ public class Main {
         exercice5();
     }
     //Exercice1
+    /*Vous travaillez pour un marché local, et on vous demande de créer un programme qui aide à vérifier
+    si la quantité de fruits dans le stock est suffisante pour le lendemain. Si le stock de pommes est
+    supérieur à 100, alors il n'y a pas besoin d'en acheter plus. Sinon, il faudra en commander.*/
     private static void exercice1(){
         int stock_pommes;
         Scanner scanner = new Scanner (System.in);
@@ -28,6 +31,9 @@ public class Main {
     }
 
     //Exercice 2:
+    /*Vous êtes en charge de la sécurité d'un musée. Le musée ne peut accueillir que des personnes
+    majeures (18 ans ou plus) pendant certaines expositions. Vous devez créer un programme pour
+    vérifier l'âge des visiteurs et décider s'ils peuvent entrer*/
     private static void exercice2() {
         int age;
         Scanner scanner = new Scanner(System.in);
@@ -42,6 +48,10 @@ public class Main {
         }
     }
 
+    /*Le gardien d'une salle des trésors vous demande de concevoir un système qui puisse afficher
+    chaque jour le nombre de trésors comptabilisés. À chaque fois qu'un trésor est compté, il faut
+    l'afficher sur l'écran avec une description spéciale pour les trésors comptés à des positions multiples
+    de 3.*/
     private static void exercice3() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Combien de trésors aujourd'hui ?");
@@ -59,7 +69,10 @@ public class Main {
             index++;
         }
     }
-
+    /*Vous travaillez pour une école qui organise un marathon de calculs. Les élèves doivent additionner
+    une série de nombres entre 1 et un nombre donné par l'utilisateur. De plus, vous devez stocker
+    chaque résultat partiel de la somme dans un tableau pour le réutiliser plus tard.
+    Ajout : Utilisez un tableau pour stocker chaque étape de la somme.*/
     private static void exercice4() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quelle est votre valeur ?");
@@ -72,6 +85,11 @@ public class Main {
         }
     }
 
+    /*Un coffre-fort contient un trésor, mais il ne s'ouvrira que si un certain mot de passe est trouvé. Ce
+    mot de passe est une chaîne de caractères spécifique que l'utilisateur doit deviner. Le programme
+    doit également stocker chaque tentative de mot de passe dans un tableau et afficher toutes les
+    tentatives incorrectes à la fin.
+    Ajout : Utilisez un tableau pour stocker chaque tentative de mot de passe incorrecte*/
     private static void exercice5() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quel est le mot de passe ?");
