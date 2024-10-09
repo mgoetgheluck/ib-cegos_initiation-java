@@ -1,7 +1,9 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class Main {
@@ -10,7 +12,9 @@ public class Main {
         //exercice2();
         //exercice3();
         //exercice4();
-        exercice5();
+        //exercice5();
+        //exercice6();
+        exercice7();
     }
     //Exercice1
     /*Vous travaillez pour un marché local, et on vous demande de créer un programme qui aide à vérifier
@@ -110,6 +114,83 @@ public class Main {
         for (String motDePasseErrone : motDePasseErrones) {
             System.out.println(motDePasseErrone);
         }
+    }
+
+    /*Vous êtes chargé de concevoir un programme pour une école qui veut automatiser le calcul des
+    moyennes de plusieurs élèves. Chaque élève a plusieurs notes, et le programme doit calculer la
+    moyenne de chaque élève, ainsi que la moyenne générale de toute la classe.*/
+    public static void exercice6() {
+        List<List<Double>> notes = new ArrayList<List<Double>>();
+        Scanner scanner = new Scanner(System.in);
+        boolean isNextEleve = true;
+        int eleveNumber = 1;
+        while(isNextEleve){
+            System.out.println("Eleve n°"+eleveNumber);
+            boolean isNextNote = true;
+            List<Double> notesCol = new ArrayList<Double>();
+            while(isNextNote) {
+                System.out.println("Quelle Note ? Type 'next' for next student");
+                String noteRead = scanner.nextLine();
+                if(noteRead.equals("next")){
+                    isNextNote = false;
+                }
+                else {
+                    double note = parseDouble(noteRead);
+                    notesCol.add(note);
+                }
+            }
+            notes.add(notesCol);
+            System.out.println("End of student n°"+eleveNumber+". Type exit for ending. Type next for next student");
+            String nextStudent = scanner.nextLine();
+            if(nextStudent.equals("exit")){
+                isNextEleve = false;
+            }
+            else {
+                eleveNumber++;
+            }
+        }
+        //Calculating averages here.
+        int i = 1;
+        double sumClass = 0d;
+        for(List<Double> notesEleve : notes){
+            double sum = 0d;
+            for(Double note: notesEleve){
+                sum+=note;
+            }
+            double average = sum/notesEleve.size();
+            System.out.println("Moyenne de l'eleve n°"+i+" est :"+average);
+            i++;
+            sumClass+=average;
+        }
+        double averageClass = sumClass / notes.size();
+        System.out.println("Moyenne de la classe est :"+averageClass);
+    }
+
+    /*Un nombre parfait est un nombre qui est égal à la somme de ses diviseurs propres (les diviseurs
+    strictement inférieurs à lui-même). Par exemple, 6 est un nombre parfait, car ses diviseurs propres
+    sont 1, 2 et 3, et 1 + 2 + 3 = 6. Votre programme doit déterminer si un nombre donné par l'utilisateur
+    est un nombre parfait.*/
+    public static void exercice7(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quel est votre nombre ?");
+        int number = scanner.nextInt();
+        List<Integer> dividersList = new ArrayList<Integer>();
+        for(int i = 1; i < number; i++){
+            if(number % i == 0){
+                dividersList.add(i);
+            }
+        }
+        int sum=0;
+        for(int divider: dividersList){
+            sum+=divider;
+        }
+        if(sum == number){
+            System.out.println(number+" est un nombre parfait !");
+        }
+        else {
+            System.out.println(number+" n'est pas un nombre parfait.");
+        }
+
     }
 
 }
