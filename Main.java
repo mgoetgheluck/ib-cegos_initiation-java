@@ -1,7 +1,8 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -14,7 +15,11 @@ public class Main {
         //exercice4();
         //exercice5();
         //exercice6();
-        exercice7();
+        //exercice7();
+        //exercice8();
+        //exercice9();
+        exercice10();
+
     }
     //Exercice1
     /*Vous travaillez pour un marché local, et on vous demande de créer un programme qui aide à vérifier
@@ -193,4 +198,156 @@ public class Main {
 
     }
 
+    /* Un centre météorologique vous demande de développer un programme qui peut enregistrer les
+    températures sur plusieurs jours dans différentes villes. Le programme doit stocker les températures
+    dans un tableau à deux dimensions, et ensuite afficher la température la plus élevée et la plus
+    basse enregistrée.
+    */
+    public static void  exercice8(){
+        Scanner scanner = new Scanner(System.in);
+        HashMap<String, List<Double>> temperatures = new HashMap<String, List<Double>>();
+        boolean isNextCity = false;
+        while(!isNextCity){
+            System.out.println("Pour quelle ville souhaitez-vous renseigner les températures ? Type exit to exit.");
+            String city = scanner.nextLine();
+            if(city.equals("exit")){
+                isNextCity = true;
+            }
+            else {
+                List<Double> temperaturesArray = new ArrayList<Double>();
+                boolean isNextTemperature = true;
+                while (isNextTemperature) {
+                    System.out.println("Quelle température ajouter à " + city + " ? Type next pour changer de ville");
+                    String scannerRead = scanner.nextLine();
+                    if (scannerRead.equals("next")) {
+                        isNextTemperature = false;
+                    } else {
+                        double temperature = parseDouble(scannerRead);
+                        temperaturesArray.add(temperature);
+                    }
+                }
+                temperatures.put(city, temperaturesArray);
+            }
+            System.out.println(temperatures);
+        }
+        //Find temperature max and min
+        String cityMin = "", cityMax = "";
+        Double temperatureMin = null, temperatureMax = null;
+        for(Map.Entry<String, List<Double>> entry : temperatures.entrySet() ){
+            String city = entry.getKey();
+            List<Double> temperaturesArray = entry.getValue();
+            for(Double temperature: temperaturesArray){
+                if(temperatureMin == null) {
+                    temperatureMin = temperature;
+                    cityMin = city;
+                }
+                else if(temperature < temperatureMin){
+                    temperatureMin = temperature;
+                    cityMin = city;
+                }
+                if(temperatureMax == null) {
+                    temperatureMax = temperature;
+                    cityMax = city;
+                }
+                else if(temperature > temperatureMax){
+                    temperatureMax = temperature;
+                    cityMax = city;
+                }
+            }
+        }
+        System.out.println("La température minimum enregistrée est "+temperatureMin+" à "+cityMin);
+        System.out.println("La température maximum enregistrée est "+temperatureMax+" à "+cityMax);
+    }
+
+    /*
+    Votre client vous demande de concevoir un programme capable de convertir des chiffres arabes
+    (par exemple 1987) en chiffres romains (par exemple MCMLXXXVII). Le programme doit demander
+    à l'utilisateur un nombre et ensuite afficher son équivalent en chiffres romains.
+     */
+    public static void exercice9(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quel est votre nombre");
+        int nombreArabe = scanner.nextInt();
+        int nombreArabeSave = nombreArabe;
+        String nombreRomain = "";
+        while(nombreArabe >= 1000){
+            nombreRomain+="M";
+            nombreArabe-=1000;
+        }
+        while(nombreArabe >= 900){
+            nombreRomain+="CM";
+            nombreArabe-=900;
+        }
+        while(nombreArabe >= 500){
+            nombreRomain+="D";
+            nombreArabe-=500;
+        }
+        while(nombreArabe >= 100){
+            nombreRomain+="C";
+            nombreArabe-=100;
+        }
+        while(nombreArabe >= 90){
+            nombreRomain+="XC";
+            nombreArabe-=90;
+        }
+        while(nombreArabe >= 50){
+            nombreRomain+="L";
+            nombreArabe-=50;
+        }
+        while(nombreArabe >= 10){
+            nombreRomain+="X";
+            nombreArabe-=10;
+        }
+        while(nombreArabe >= 5){
+            nombreRomain+="V";
+            nombreArabe-=5;
+        }
+        while(nombreArabe >= 4){
+            nombreRomain+="IV";
+            nombreArabe-=4;
+        }
+        while(nombreArabe >= 1){
+            nombreRomain+="I";
+            nombreArabe-=1;
+        }
+        System.out.println("La conversion de "+nombreArabeSave+" est :"+nombreRomain);
+    }
+
+    /*
+    Une société vous a demandé de développer un générateur de mot de passe sécurisé. Le
+    programme doit générer un mot de passe de longueur donnée par l'utilisateur. Le mot de passe doit
+    contenir des lettres majuscules, des lettres minuscules, des chiffres et des symboles spéciaux. Vous
+    devez aussi vérifier que le mot de passe généré respecte ces critères.
+     */
+    public static void exercice10(){
+        final String UPPER="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final String LOWER="abcdefghijklmnopqrstuvwxyz";
+        final String DIGITS="0123456789";
+        final String PUNCTUATION = "!@#$%&*()_+-=[]|,./?><";
+        SecureRandom random = new SecureRandom();
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quelle est la longueur de votre mot de passe ?");
+        int longueur = scanner.nextInt();
+
+        String characters = UPPER + LOWER + DIGITS + PUNCTUATION;
+        String regexpn = "^.*(?=.{"+longueur+","+longueur+"})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$";
+        Pattern pattern = Pattern.compile(regexpn);
+
+        boolean isPasswordMatched = false;
+        String passString = "";
+        while(!isPasswordMatched) {
+            char[] password = new char[longueur];
+            for (int i = 0; i < longueur; i++) {
+                password[i] = characters.charAt(random.nextInt(characters.length()));
+            }
+            passString = new String(password);
+            Matcher matcher = pattern.matcher(passString);
+            if(matcher.matches()){
+                isPasswordMatched = true;
+            }
+        }
+        System.out.println("Le mot de passe généré est "+passString);
+    }
 }
